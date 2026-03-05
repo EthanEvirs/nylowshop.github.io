@@ -5,8 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nylow Shop | Under Construction</title>
     <style>
+        /* 1. Define the custom font */
+        @font-face {
+            font-family: 'FukuCatch';
+            /* Make sure this filename matches your actual file exactly */
+            src: url('FukuCatch-Detetiive.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            /* 2. Apply the font here for the whole page */
+            font-family: 'FukuCatch', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -15,18 +25,25 @@
             background-color: #f4f4f9;
             color: #333;
             text-align: center;
-            /* Hint to the user that they can click anywhere */
             cursor: pointer; 
         }
+
         .container {
             padding: 2rem;
             background: white;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            /* Prevent text selection so clicking feels natural */
             user-select: none; 
         }
-        h1 { color: #24292e; }
+
+        h1 { 
+            /* 3. Specifically use it for the header with a larger size */
+            font-family: 'FukuCatch';
+            color: #24292e; 
+            font-size: 3rem;
+            margin: 0;
+        }
+
         p { font-size: 1.2rem; }
         a { color: #0366d6; text-decoration: none; font-weight: bold; }
         a:hover { text-decoration: underline; }
@@ -40,16 +57,16 @@
 
     <div class="container">
         <h1>Nylow Shop</h1>
+        <p>Under Construction</p>
     </div>
 
     <script>
-        // This function starts the music on the very first click anywhere on the page
         document.body.addEventListener('click', function() {
             const audio = document.getElementById('bgMusic');
             audio.play().catch(error => {
-                console.log("Autoplay was prevented. Click again!");
+                console.log("Autoplay was prevented.");
             });
-        }, { once: true }); // '{ once: true }' ensures this only runs one time
+        }, { once: true });
     </script>
 
 </body>
