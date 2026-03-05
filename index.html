@@ -15,12 +15,16 @@
             background-color: #f4f4f9;
             color: #333;
             text-align: center;
+            /* Hint to the user that they can click anywhere */
+            cursor: pointer; 
         }
         .container {
             padding: 2rem;
             background: white;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            /* Prevent text selection so clicking feels natural */
+            user-select: none; 
         }
         h1 { color: #24292e; }
         p { font-size: 1.2rem; }
@@ -29,13 +33,24 @@
     </style>
 </head>
 <body>
-    <audio controls autoplay>
-        <source src="Alien.mp3" type="audio/mpeg">Your browser does not support the audio element
+
+    <audio id="bgMusic" loop>
+        <source src="Alien.mp3" type="audio/mpeg">
     </audio>
+
     <div class="container">
         <h1>Nylow Shop</h1>
-        <p>Your custom domain <strong>nylow.shop</strong> is officially working!</p>
-        <p>Built with ❤️ by <a href="https://github.com/EthanEvirs">EthanEvirs</a></p>
     </div>
+
+    <script>
+        // This function starts the music on the very first click anywhere on the page
+        document.body.addEventListener('click', function() {
+            const audio = document.getElementById('bgMusic');
+            audio.play().catch(error => {
+                console.log("Autoplay was prevented. Click again!");
+            });
+        }, { once: true }); // '{ once: true }' ensures this only runs one time
+    </script>
+
 </body>
 </html>
