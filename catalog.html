@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nylow Shop | Catalog</title>
+    <style>
+        /* 1. Custom Font Setup */
+        @font-face {
+            font-family: 'YukariFont';
+            src: url('yukari.ttf') format('truetype');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+
+        body {
+            font-family: 'YukariFont', sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* 2. THE TOP NAVIGATION BAR */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between; /* Spaces Left, Center, Right */
+            align-items: center;
+            padding: 10px 30px;
+            box-sizing: border-box;
+            background: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid #333;
+            z-index: 2000;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #ccc;
+            font-size: 1rem;
+            width: 80px; /* Fixed width to keep center text centered */
+            transition: color 0.3s;
+        }
+        .nav-link:hover { color: #ffffff; }
+
+        /* CENTER SCROLLING TEXT */
+        .header-scroll-window {
+            width: 200px;
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+        }
+
+        .header-scroll-content {
+            display: flex;
+            animation: header-scroll 8s linear infinite;
+        }
+
+        .header-scroll-content h2 {
+            font-size: 1.2rem;
+            margin: 0;
+            padding-right: 30px;
+            color: #ffffff;
+            letter-spacing: 2px;
+        }
+
+        @keyframes header-scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* MUSIC STATUS */
+        #music-status {
+            font-size: 0.8rem;
+            color: #3498db;
+            width: 80px; /* Matches nav-link width */
+            text-align: right;
+            cursor: pointer;
+        }
+
+        /* 3. LAYOUT STRUCTURE */
+        .catalog-container {
+            display: flex;
+            width: 100vw;
+            margin-top: 50px; /* Space for the fixed header */
+        }
+
+        .image-display {
+            width: 50vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: sticky;
+            top: 0;
+        }
+
+        .image-display img {
+            max-width: 80%;
+            max-height: 70vh;
+            opacity: 1;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .text-display {
+            width: 50vw;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-panel {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 40px;
+            box-sizing: border-box;
+        }
+
+        .panel1 { border-right: 4px solid #3498db; }
+        .panel2 { border-right: 4px solid #e74c3c; }
+
+        .item-title { font-size: 3.5rem; margin: 0 0 10px 0; letter-spacing: -2px;}
+        .item-desc { font-size: 1.4rem; color: #aaa; max-width: 80%; line-height: 1.4;}
+        .item-price { font-size: 2.2rem; margin-top: 20px; color: #fff;}
+
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="stilts.mp3" type="audio/mpeg">
+    </audio>
+
+    <header>
+        <a href="index.html" class="nav-link">← Back</a>
+
+        <div class="header-scroll-window">
+            <div class="header-scroll-content">
+                <h2>NYLOW NYLOW NYLOW</h2>
+                <h2>NYLOW NYLOW NYLOW</h2>
+            </div>
+        </div>
+
+        <div id="music-status">♫ OFF</div>
+    </header>
+
+    <div class="catalog-container">
+        <div class="image-display">
+            <img id="activeImage" src="Slo tee.jpg" alt="Product Display">
+        </div>
+
+        <div class="text-display">
+            <div class="item-panel panel1" id="trigger1">
+                <h1 class="item-title">SLO TEE</h1>
+                <p class="item-desc">Heavyweight cotton. Blue halftone grunge character graphic.</p>
+                <p class="item-price">$45.00</p>
+            </div>
+
+            <div class="item-panel panel2" id="trigger2">
+                <h1 class="item-title">NYROW TEE</h1>
+                <p class="item-desc">Heavyweight cotton. Red halftone spray-paint character graphic.</p>
+                <p class="item-price">$45.00</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Music Logic (Toggle On/Off)
+    const audio = document.getElementById('bgMusic');
+    const mStatus = document.getElementById('music-status');
+
+    // We attach the listener to mStatus specifically so clicking 'Back' doesn't trigger music
+    mStatus.addEventListener('click', function() {
+        if (audio.paused) {
+            audio.play().then(() => {
+                mStatus.innerText = "♫ ON";
+                mStatus.style.color = "#3498db"; // Blue when playing
+            }).catch(e => console.log("Music blocked"));
+        } else {
+            audio.pause();
+            mStatus.innerText = "♫ OFF";
+        }
+    });
+
+    // Image Swap Logic (Keep this as is)
+    const activeImage = document.getElementById('activeImage');
+    const trigger1 = document.getElementById('trigger1');
+    const trigger2 = document.getElementById('trigger2');
+
+    const swapImage = (entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                activeImage.style.opacity = '0';
+                
+                setTimeout(() => {
+                    if (entry.target.id === 'trigger1') {
+                        activeImage.src = 'SLO TEE.png'; 
+                    } else if (entry.target.id === 'trigger2') {
+                        activeImage.src = 'NYROW TEE.png'; 
+                    }
+                    activeImage.style.opacity = '1';
+                }, 400);
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(swapImage, {
+        threshold: 0.6 
+    });
+
+    observer.observe(trigger1);
+    observer.observe(trigger2);
+    </script>
+</body>
+</html>
