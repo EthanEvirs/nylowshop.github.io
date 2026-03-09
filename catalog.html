@@ -18,6 +18,7 @@
             color: #444; 
             overflow-x: hidden;
         }
+        
 
         header {
             position: fixed;
@@ -38,6 +39,7 @@
         .header-scroll-window { width: 200px; overflow: hidden; white-space: nowrap; display: flex; }
         .header-scroll-content { display: flex; animation: header-scroll 8s linear infinite; }
         .header-scroll-content h2 { font-size: 1.2rem; margin: 0; padding-right: 30px; color: #ffffff; letter-spacing: 2px; }
+        .currency-symbol { font-family: Arial, sans-serif; font-weight: bold; margin-right: 2px; vertical-align: middle;}
 
         @keyframes header-scroll {
             from { transform: translateX(0); }
@@ -159,7 +161,7 @@
                     <img src="SLOauto.png" class="item-panel-logo" alt="Slo Logo">
                 </div>
                 <p class="item-desc">Heavyweight cotton. Blue halftone grunge character graphic.</p>
-                <p class="item-price">$45.00</p>
+                <p class="item-price"><span class="currency-symbol">$</span>20.00</p>
             </div>
 
             <div class="item-panel" id="trigger2">
@@ -168,7 +170,7 @@
                     <img src="NYROWAUTO.png" class="item-panel-logo" alt="Nyrow Logo">
                 </div>
                 <p class="item-desc">Heavyweight cotton. Red halftone spray-paint character graphic.</p>
-                <p class="item-price">$45.00</p>
+                <p class="item-price"><span class="currency-symbol">$</span>20.00</p>
             </div>
         </div>
     </div>
