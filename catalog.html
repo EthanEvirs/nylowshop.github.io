@@ -16,7 +16,6 @@
             font-weight: normal; font-style: normal;
         }
 
-        /* SCROLL SNAP */
         html, body {
             height: 100%;
             margin: 0;
@@ -54,12 +53,7 @@
 
         #music-status { font-family: 'YukariFont'; font-size: 0.8rem; color: #666; width: 80px; text-align: right; cursor: pointer; }
 
-        /* CURRENCY STYLING */
-        .currency-symbol {
-            font-family: Arial, sans-serif;
-            font-weight: bold;
-            vertical-align: baseline;
-        }
+        .currency-symbol { font-family: Arial, sans-serif; font-weight: bold; vertical-align: baseline; }
 
         .catalog-container { display: flex; width: 100vw; }
 
@@ -78,7 +72,7 @@
 
         .image-display img {
             max-width: 80%;
-            max-height: 70vh;
+            max-height: 75vh; /* Slightly taller for desktop visibility */
             opacity: 1;
             transition: opacity 0.4s ease-in-out;
         }
@@ -90,56 +84,69 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start; /* Aligns text higher up on desktop */
             align-items: center;
             text-align: center;
-            padding: 0 40px;
+            padding: 15vh 40px 0 40px; /* Pushes content down slightly from the header */
             box-sizing: border-box;
             background: #ffffff;
             scroll-snap-align: start;
             scroll-snap-stop: always;
         }
 
-        .title-group { display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
+        .title-group { display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
         .item-title { font-family: 'YukariFont'; font-size: 3.5rem; margin: 0; }
-        .item-panel-logo { height: 5.5em; width: auto; margin-left: 15px; }
+        .item-panel-logo { height: 4.5em; width: auto; margin-left: 15px; } /* Slightly smaller for better fit */
         
         .item-desc { 
             font-family: 'Coolvetica', sans-serif;
             font-size: 1.1rem;
             color: #c9c7c7; 
             max-width: 85%;
-            line-height: 1.6;
-            margin-top: 20px;
-            padding: 25px;
+            line-height: 1.4;
+            margin-top: 15px;
+            padding: 20px;
             border-radius: 12px;
             background: rgba(0, 0, 0, 0.85); 
             backdrop-filter: blur(8px);
             border: 1px solid #333;
         }
 
-        .item-price { font-family: 'YukariFont'; font-size: 2.2rem; margin-top: 25px; }
+        .item-price { font-family: 'YukariFont'; font-size: 2.2rem; margin-top: 15px; }
 
+        /* MOBILE OVERRIDE */
         @media (max-width: 600px) {
             .catalog-container { display: block; }
+
             .graphic-display-container {
                 width: 100vw;
-                height: 40vh;
+                height: 45vh;
                 position: sticky;
                 top: 45px;
                 z-index: 500;
                 background: #ffffff;
             }
-            .image-display img { max-width: 65%; max-height: 30vh; }
+
+            .image-display img { 
+                max-width: 85%;
+                max-height: 35vh; 
+                object-fit: contain;
+            }
+
             .text-display { width: 100vw; }
+
             .item-panel { 
                 height: 100vh; 
-                padding: 40px 20px; 
-                justify-content: flex-end; 
-                padding-bottom: 10vh; 
+                display: flex;
+                justify-content: flex-end; /* Mobile needs it at bottom because image is top */
+                padding: 0 20px 8vh 20px;
+                align-items: center;
             }
-            .item-title { font-size: 2.2rem; }
-            .item-panel-logo { height: 2em; }
+
+            .item-title { font-size: 2.5rem; }
+            .item-panel-logo { height: 2.2em; }
+            .item-desc { font-size: 0.95rem; padding: 12px; width: 90%; }
+            .item-price { font-size: 2rem; margin-top: 10px; }
         }
     </style>
 </head>
@@ -230,7 +237,7 @@
                 if (entry.target.id === 'trigger2') updateDisplay('nyrow');
             }
         });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.3 }); // Lowered threshold for better triggers on small screens
     
     observer.observe(document.getElementById('trigger1'));
     observer.observe(document.getElementById('trigger2'));
