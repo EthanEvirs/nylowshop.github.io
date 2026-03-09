@@ -16,11 +16,14 @@
             font-weight: normal; font-style: normal;
         }
 
-        body {
-            font-family: 'YukariFont', sans-serif;
-            background-color: #ffffff;
+        /* SCROLL SNAP */
+        html, body {
+            height: 100%;
             margin: 0;
-            color: #797878; 
+            padding: 0;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            background-color: #ffffff;
             overflow-x: hidden;
         }
 
@@ -39,18 +42,19 @@
             z-index: 3000;
         }
 
-        .nav-link { text-decoration: none; color: #ccc; font-size: 1rem; width: 80px; }
+        .nav-link { text-decoration: none; color: #ccc; font-size: 1rem; width: 80px; font-family: 'YukariFont'; }
         .header-scroll-window { width: 200px; overflow: hidden; white-space: nowrap; display: flex; }
         .header-scroll-content { display: flex; animation: header-scroll 8s linear infinite; }
-        .header-scroll-content h2 { font-size: 1.2rem; margin: 0; padding-right: 30px; color: #ffffff; letter-spacing: 2px; }
+        .header-scroll-content h2 { font-family: 'YukariFont'; font-size: 1.2rem; margin: 0; padding-right: 30px; color: #ffffff; letter-spacing: 2px; }
 
         @keyframes header-scroll {
             from { transform: translateX(0); }
             to { transform: translateX(-50%); }
         }
 
-        #music-status { font-size: 0.8rem; color: #666; width: 80px; text-align: right; cursor: pointer; transition: color 0.3s; }
+        #music-status { font-family: 'YukariFont'; font-size: 0.8rem; color: #666; width: 80px; text-align: right; cursor: pointer; }
 
+        /* CURRENCY STYLING */
         .currency-symbol {
             font-family: Arial, sans-serif;
             font-weight: bold;
@@ -67,10 +71,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #ffffff;
             background: radial-gradient(circle at center, #c2e5f9 0%, #ffffff 55%);
             z-index: 10;
-            overflow: hidden;
             transition: background 0.6s ease;
         }
 
@@ -78,14 +80,10 @@
             max-width: 80%;
             max-height: 70vh;
             opacity: 1;
-            transform: scale(1);
-            transition: opacity 0.4s ease-in-out, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 10;
-            position: relative;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.05));
+            transition: opacity 0.4s ease-in-out;
         }
 
-        .text-display { width: 50vw; display: flex; flex-direction: column; }
+        .text-display { width: 50vw; }
         
         .item-panel {
             height: 100vh;
@@ -98,10 +96,12 @@
             padding: 0 40px;
             box-sizing: border-box;
             background: #ffffff;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
         }
 
         .title-group { display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
-        .item-title { font-size: 3.5rem; margin: 0; letter-spacing: -1px; line-height: 1.1; }
+        .item-title { font-family: 'YukariFont'; font-size: 3.5rem; margin: 0; }
         .item-panel-logo { height: 5.5em; width: auto; margin-left: 15px; }
         
         .item-desc { 
@@ -116,100 +116,74 @@
             background: rgba(0, 0, 0, 0.85); 
             backdrop-filter: blur(8px);
             border: 1px solid #333;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
-        .item-price { font-size: 2.2rem; margin-top: 25px; }
+        .item-price { font-family: 'YukariFont'; font-size: 2.2rem; margin-top: 25px; }
 
-        /* MOBILE FIX FOR IPHONE MINI */
         @media (max-width: 600px) {
-            header { padding: 10px 15px; }
-            .nav-link, #music-status { width: 60px; font-size: 0.85rem; }
-            
             .catalog-container { display: block; }
-
             .graphic-display-container {
                 width: 100vw;
-                height: 45vh; 
-                position: relative; /* Fixed overlap: removed sticky for mobile */
-                top: 0; 
-                z-index: 10;
-                background: radial-gradient(circle at center, #c2e5f9 0%, #ffffff 75%);
+                height: 40vh;
+                position: sticky;
+                top: 45px;
+                z-index: 500;
+                background: #ffffff;
             }
-
-            .image-display img { 
-                max-width: 80%; 
-                max-height: 35vh; 
-                margin-top: 60px; /* Accounts for fixed header */
-            }
-
+            .image-display img { max-width: 65%; max-height: 30vh; }
             .text-display { width: 100vw; }
-
             .item-panel { 
-                height: auto; 
-                min-height: 60vh;
-                padding: 30px 20px 60px 20px; 
-                border-bottom: 1px solid #eee;
-                justify-content: flex-start;
+                height: 100vh; 
+                padding: 40px 20px; 
+                justify-content: flex-end; 
+                padding-bottom: 10vh; 
             }
-
-            .item-title { font-size: 2rem; }
-            .item-panel-logo { height: 1.8em; }
-            .item-desc { 
-                font-size: 1rem; 
-                padding: 15px; 
-                max-width: 95%;
-                margin-top: 10px;
-            }
-            .item-price { font-size: 1.8rem; margin-top: 15px; }
+            .item-title { font-size: 2.2rem; }
+            .item-panel-logo { height: 2em; }
         }
     </style>
 </head>
 <body>
 
-    <audio id="bgMusic" loop><source src="stilts.mp3" type="audio/mpeg"></audio>
+    <audio id="bgMusic" loop><source src="NYLOWSHIRTS.wav" type="audio/mpeg"></audio>
 
     <header>
-        <a href="index.html" class="nav-link">← Back</a>
+        <a href="index.html" class="nav-link">back</a>
         <div class="header-scroll-window">
             <div class="header-scroll-content">
-                <h2>NYLOW NYLOW NYLOW NYLOW NYLOW</h2>
-                <h2>NYLOW NYLOW NYLOW NYLOW NYLOW</h2>
+                <h2>nylow nylow nylow</h2>
+                <h2>nylow nylow nylow</h2>
             </div>
         </div>
-        <div id="music-status">♫ OFF</div>
+        <div id="music-status">off</div>
     </header>
 
     <div class="catalog-container">
         <div class="graphic-display-container" id="graphicArea">
             <div class="image-display">
-                <img id="activeImage" src="SLOTEE.png" alt="Product Display">
+                <img id="activeImage" src="SLOTEE.png" alt="Product">
             </div>
         </div>
 
         <div class="text-display">
             <div class="item-panel" id="trigger1">
                 <div class="title-group">
-                    <h1 class="item-title" style="color: #3498db;">SLO TEE</h1>
-                    <img src="SLOauto.png" class="item-panel-logo" alt="Slo Logo">
+                    <h1 class="item-title" style="color: #3498db;">slo tee</h1>
+                    <img src="SLOauto.png" class="item-panel-logo">
                 </div>
                 <div class="item-desc">
-                    <strong style="color: #3498db;">Slo</strong> isn’t just husky; he’s a walking sub woofer. You’ll find him in the heart of the underground, 
-                    blending heavy bass lines with the hiss of his spraycan. He moves at his own pace, 
-                    but when he drops a beat, the whole block feels it.
+                    <strong style="color: #3498db;">Slo</strong> isn’t just husky; he’s a walking sub woofer. You’ll find him in the heart of the underground, blending heavy bass lines with the hiss of a fresh spraycan. He moves at his own pace, but when he drops, the whole city feels it.
                 </div>
                 <p class="item-price" style="color: #3498db;"><span class="currency-symbol">$</span>20.00</p>
             </div>
 
             <div class="item-panel" id="trigger2">
                 <div class="title-group">
-                    <h1 class="item-title" style="color: #e74c3c;">NYROW TEE</h1>
-                    <img src="NYROWAUTO.png" class="item-panel-logo" alt="Nyrow Logo">
+                    <h1 class="item-title" style="color: #e74c3c;">nyrow tee</h1>
+                    <img src="NYROWAUTO.png" class="item-panel-logo">
                 </div>
                 <div class="item-desc">
-                    <strong style="color: #e74c3c;">Nyrow</strong> is a ghost in the city a street punk who says nothing but leaves a mark. 
-                    He keeps to himself, moving through the shadows with hair trigger focus. 
-                    His art is fast, jagged, and deadly accurate.
+                    <strong style="color: #e74c3c;">Nyrow</strong> is a ghost in the city—a street punk who says nothing but leaves a mark that screams. He keeps to himself, moving through the shadows with hair trigger focus. His art is fast, jagged, and deadly accurate.
                 </div>
                 <p class="item-price" style="color: #e74c3c;"><span class="currency-symbol">$</span>20.00</p>
             </div>
@@ -221,45 +195,31 @@
     const mStatus = document.getElementById('music-status');
     const activeImage = document.getElementById('activeImage');
     const graphicArea = document.getElementById('graphicArea');
-    const trigger1 = document.getElementById('trigger1');
-    const trigger2 = document.getElementById('trigger2');
 
-    mStatus.addEventListener('click', function() {
+    mStatus.onclick = () => {
         if (audio.paused) {
-            audio.play().then(() => {
-                mStatus.innerText = "♫ ON"; 
-                mStatus.style.color = "#3498db";
-            }).catch(e => console.log("Music blocked"));
+            audio.play(); mStatus.innerText = "on"; mStatus.style.color = "#3498db";
         } else {
-            audio.pause(); 
-            mStatus.innerText = "♫ OFF"; 
-            mStatus.style.color = "#666";
+            audio.pause(); mStatus.innerText = "off"; mStatus.style.color = "#666";
         }
-    });
+    };
 
     const updateDisplay = (product) => {
         const currentSrc = activeImage.src.split('/').pop();
-        
         if (product === 'slo' && currentSrc !== 'SLOTEE.png') {
             activeImage.style.opacity = '0';
-            activeImage.style.transform = 'scale(0.95)';
-            
             setTimeout(() => {
                 activeImage.src = 'SLOTEE.png';
-                graphicArea.style.background = 'radial-gradient(circle at center, #c2e5f9 0%, #ffffff 55%)';
+                graphicArea.style.background = 'radial-gradient(circle at center, #c2e5f9 0%, #ffffff 75%)';
                 activeImage.style.opacity = '1';
-                activeImage.style.transform = 'scale(1)';
-            }, 250);
+            }, 200);
         } else if (product === 'nyrow' && currentSrc !== 'NYROWTEE.png') {
             activeImage.style.opacity = '0';
-            activeImage.style.transform = 'scale(0.95)';
-            
             setTimeout(() => {
                 activeImage.src = 'NYROWTEE.png';
-                graphicArea.style.background = 'radial-gradient(circle at center, #f9dcdc 0%, #ffffff 55%)';
+                graphicArea.style.background = 'radial-gradient(circle at center, #f9dcdc 0%, #ffffff 75%)';
                 activeImage.style.opacity = '1';
-                activeImage.style.transform = 'scale(1)';
-            }, 250);
+            }, 200);
         }
     };
 
@@ -270,13 +230,13 @@
                 if (entry.target.id === 'trigger2') updateDisplay('nyrow');
             }
         });
-    }, { threshold: 0.25, rootMargin: "-10% 0px -10% 0px" });
+    }, { threshold: 0.5 });
     
-    observer.observe(trigger1);
-    observer.observe(trigger2);
+    observer.observe(document.getElementById('trigger1'));
+    observer.observe(document.getElementById('trigger2'));
 
     window.addEventListener('scroll', () => {
-        if (window.scrollY < 100) updateDisplay('slo');
+        if (window.scrollY < 50) updateDisplay('slo');
     }, { passive: true });
     </script>
 </body>
