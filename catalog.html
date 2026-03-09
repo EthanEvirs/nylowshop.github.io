@@ -119,26 +119,49 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
-        /* Base price style */
         .item-price { font-size: 2.2rem; margin-top: 25px; }
 
+        /* MOBILE FIX FOR IPHONE MINI */
         @media (max-width: 600px) {
             header { padding: 10px 15px; }
             .nav-link, #music-status { width: 60px; font-size: 0.85rem; }
+            
             .catalog-container { display: block; }
+
             .graphic-display-container {
                 width: 100vw;
                 height: 45vh; 
-                position: sticky;
-                top: 40px; 
-                z-index: 100;
+                position: relative; /* Fixed overlap: removed sticky for mobile */
+                top: 0; 
+                z-index: 10;
+                background: radial-gradient(circle at center, #c2e5f9 0%, #ffffff 75%);
             }
-            .image-display img { max-width: 70%; max-height: 30vh; }
-            .text-display { width: 100vw; position: relative; }
-            .item-panel { height: 75vh; padding: 40px 20px; border-bottom: 1px solid #eee; }
-            .item-title { font-size: 2.2rem; }
-            .item-panel-logo { height: 2em; }
-            .item-desc { font-size: 1rem; padding: 15px; }
+
+            .image-display img { 
+                max-width: 80%; 
+                max-height: 35vh; 
+                margin-top: 60px; /* Accounts for fixed header */
+            }
+
+            .text-display { width: 100vw; }
+
+            .item-panel { 
+                height: auto; 
+                min-height: 60vh;
+                padding: 30px 20px 60px 20px; 
+                border-bottom: 1px solid #eee;
+                justify-content: flex-start;
+            }
+
+            .item-title { font-size: 2rem; }
+            .item-panel-logo { height: 1.8em; }
+            .item-desc { 
+                font-size: 1rem; 
+                padding: 15px; 
+                max-width: 95%;
+                margin-top: 10px;
+            }
+            .item-price { font-size: 1.8rem; margin-top: 15px; }
         }
     </style>
 </head>
