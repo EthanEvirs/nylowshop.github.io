@@ -5,51 +5,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nylow Shop | Under Construction</title>
     <style>
-        /* 1. Define your new yukari font */
+        /* 1. Custom Font Setup */
         @font-face {
             font-family: 'YukariFont';
-            /* This MUST match your filename exactly */
             src: url('yukari.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-            font-display: swap;
+            font-weight: normal; font-style: normal; font-display: swap;
         }
 
         body {
-            /* Applying the custom font as the primary choice */
             font-family: 'YukariFont', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
             background-color: #f4f4f9;
+            margin: 0;
             color: #333;
-            text-align: center;
-            cursor: pointer; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
         }
 
+        /* 2. THE TOP BAR (Matches Catalog Style) */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 30px;
+            box-sizing: border-box;
+            background: rgba(0, 0, 0, 0.85); /* Semi-transparent black */
+            backdrop-filter: blur(8px); /* Blur effect */
+            border-bottom: 1px solid #333;
+            z-index: 1000;
+        }
+
+        .spacer { width: 80px; } /* Balanced spacer for centering */
+
+        /* CENTER SCROLLING TEXT */
+        .header-scroll-window {
+            width: 200px;
+            overflow: hidden;
+            white-space: nowrap;
+            display: flex;
+        }
+
+        .header-scroll-content {
+            display: flex;
+            animation: header-scroll 8s linear infinite;
+        }
+
+        .header-scroll-content h2 {
+            font-size: 1.2rem;
+            margin: 0;
+            padding-right: 30px;
+            color: #ffffff; /* White text for dark bar */
+            letter-spacing: 2px;
+        }
+
+        @keyframes header-scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        /* MUSIC STATUS BUTTON */
+        #music-status {
+            font-size: 0.8rem;
+            color: #3498db;
+            width: 80px;
+            text-align: right;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        /* 3. MAIN CONTENT */
         .container {
-            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centers items horizontally */
+            justify-content: center;
+            padding: 3rem;
             background: white;
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
             user-select: none; 
+            margin-top: 50px;
+            text-align: center;
         }
 
         h1 { 
-            font-family: 'YukariFont';
-            color: #24292e; 
-            font-size: 4rem; /* Increased size to showcase the new font */
+            font-size: 4rem;
             margin: 0;
             letter-spacing: -1px;
+            color: #24292e;
         }
 
-        p { 
-            font-family: 'YukariFont';
-            font-size: 1.5rem; 
-            margin-top: 10px;
-            color: #666;
+        .catalog-link {
+            text-decoration: none;
+            color: #3498db;
+            font-size: 1.2rem;
+            margin-top: 25px;
+            padding: 12px 24px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .catalog-link:hover { 
+            background: #3498db;
+            color: white;
+            transform: translateY(-2px);
         }
 
     </style>
@@ -60,23 +127,43 @@
         <source src="Front.mp3" type="audio/mpeg">
     </audio>
 
+    <header>
+        <div class="spacer"></div>
+
+        <div class="header-scroll-window">
+            <div class="header-scroll-content">
+                <h2>NYLOW NYLOW NYLOW</h2>
+                <h2>NYLOW NYLOW NYLOW</h2>
+            </div>
+        </div>
+
+        <div id="music-status">♫ OFF</div>
+    </header>
+
     <div class="container">
         <h1>Nylow Shop</h1>
-        <!-- <p>Under Construction</p> -->
-
-        <div style="margin-top: 20px;">
-            <a href="catalog.html" style="text-decoration: none; color: #3498db; font-family: 'YukariFont'; font-size: 1.2rem;">View Catalog</a>
-        </div>
+        <a href="catalog.html" class="catalog-link">View Catalog</a>
     </div>
 
     <script>
-        // Music plays on first click
-        document.body.addEventListener('click', function() {
-            const audio = document.getElementById('bgMusic');
-            audio.play().catch(error => {
-                console.log("Audio play failed. Ensure Front.mp3 is in the folder.");
-            });
-        }, { once: true });
+        const audio = document.getElementById('bgMusic');
+        const mStatus = document.getElementById('music-status');
+
+        // Music Toggle Logic
+        mStatus.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    mStatus.innerText = "♫ ON";
+                    mStatus.style.color = "#3498db";
+                }).catch(error => {
+                    console.log("Audio play failed. Check Front.mp3 filename.");
+                });
+            } else {
+                audio.pause();
+                mStatus.innerText = "♫ OFF";
+                mStatus.style.color = "#666";
+            }
+        });
     </script>
 
 </body>

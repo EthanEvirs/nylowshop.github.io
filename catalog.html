@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nylow Shop | Catalog</title>
     <style>
-        /* 1. Custom Font Setup */
         @font-face {
             font-family: 'YukariFont';
             src: url('yukari.ttf') format('truetype');
@@ -16,100 +15,71 @@
             font-family: 'YukariFont', sans-serif;
             background-color: #ffffff;
             margin: 0;
-            color: #ffffff;
+            color: #444; 
             overflow-x: hidden;
         }
 
-        /* 2. THE TOP NAVIGATION BAR */
         header {
             position: fixed;
             top: 0;
             width: 100%;
             display: flex;
-            justify-content: space-between; /* Spaces Left, Center, Right */
+            justify-content: space-between;
             align-items: center;
             padding: 10px 30px;
             box-sizing: border-box;
-            background: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(8px);
             border-bottom: 1px solid #333;
-            z-index: 2000;
+            z-index: 3000;
         }
 
-        .nav-link {
-            text-decoration: none;
-            color: #ccc;
-            font-size: 1rem;
-            width: 80px; /* Fixed width to keep center text centered */
-            transition: color 0.3s;
-        }
-        .nav-link:hover { color: #ffffff; }
-
-        /* CENTER SCROLLING TEXT */
-        .header-scroll-window {
-            width: 200px;
-            overflow: hidden;
-            white-space: nowrap;
-            display: flex;
-        }
-
-        .header-scroll-content {
-            display: flex;
-            animation: header-scroll 8s linear infinite;
-        }
-
-        .header-scroll-content h2 {
-            font-size: 1.2rem;
-            margin: 0;
-            padding-right: 30px;
-            color: #ffffff;
-            letter-spacing: 2px;
-        }
+        .nav-link { text-decoration: none; color: #ccc; font-size: 1rem; width: 80px; }
+        .header-scroll-window { width: 200px; overflow: hidden; white-space: nowrap; display: flex; }
+        .header-scroll-content { display: flex; animation: header-scroll 8s linear infinite; }
+        .header-scroll-content h2 { font-size: 1.2rem; margin: 0; padding-right: 30px; color: #ffffff; letter-spacing: 2px; }
 
         @keyframes header-scroll {
             from { transform: translateX(0); }
             to { transform: translateX(-50%); }
         }
 
-        /* MUSIC STATUS */
-        #music-status {
-            font-size: 0.8rem;
-            color: #3498db;
-            width: 80px; /* Matches nav-link width */
-            text-align: right;
-            cursor: pointer;
-        }
+        #music-status { font-size: 0.8rem; color: #3498db; width: 80px; text-align: right; cursor: pointer; }
 
-        /* 3. LAYOUT STRUCTURE */
         .catalog-container {
             display: flex;
             width: 100vw;
-            margin-top: 50px; /* Space for the fixed header */
         }
 
-        .image-display {
+        .graphic-display-container {
             width: 50vw;
             height: 100vh;
+            position: sticky;
+            top: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: sticky;
-            top: 0;
+            background-color: #ffffff;
+            /* CRISPER GRADIENT: Concentrated color in center, fading out by 50% */
+            background: radial-gradient(circle at center, #c2e5f9 0%, #ffffff 50%);
+            z-index: 10;
+            overflow: hidden;
+            transition: background 0.5s ease;
         }
 
         .image-display img {
             max-width: 80%;
             max-height: 70vh;
             opacity: 1;
-            transition: opacity 0.4s ease-in-out;
+            transition: opacity 0.4s ease-in-out, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
+            position: relative;
+            /* Soft shadow to make the character pop against the circle */
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.05));
         }
 
-        .text-display {
-            width: 50vw;
-            display: flex;
-            flex-direction: column;
-        }
-
+        .text-display { width: 50vw; display: flex; flex-direction: column; }
+        
         .item-panel {
             height: 100vh;
             width: 100%;
@@ -120,50 +90,83 @@
             text-align: center;
             padding: 0 40px;
             box-sizing: border-box;
+            background: #ffffff;
         }
 
-        .panel1 { border-right: 4px solid #3498db; }
-        .panel2 { border-right: 4px solid #e74c3c; }
+        .title-group { display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
+        .item-title { font-size: 3.5rem; margin: 0; letter-spacing: -1px; line-height: 1.1; }
+        .item-panel-logo { height: 5.5em; width: auto; margin-left: 15px; }
+        .item-desc { font-size: 1.4rem; color: #666; max-width: 70%; line-height: 1.6; }
+        .item-price { font-size: 2.2rem; margin-top: 25px; color: #444; }
 
-        .item-title { font-size: 3.5rem; margin: 0 0 10px 0; letter-spacing: -2px;}
-        .item-desc { font-size: 1.4rem; color: #aaa; max-width: 80%; line-height: 1.4;}
-        .item-price { font-size: 2.2rem; margin-top: 20px; color: #fff;}
-
+        @media (max-width: 600px) {
+            header { padding: 10px 15px; }
+            .nav-link, #music-status { width: 60px; font-size: 0.85rem; }
+            .catalog-container { display: block; }
+            
+            .graphic-display-container {
+                width: 100vw;
+                height: 45vh; 
+                position: fixed; 
+                top: 0;
+                left: 0;
+                border-bottom: 1px solid #eee;
+                background: radial-gradient(circle at center, #c2e5f9 0%, #ffffff 65%);
+            }
+            
+            .image-display img { max-width: 85%; max-height: 35vh; }
+            
+            .text-display { 
+                width: 100vw; 
+                margin-top: 45vh; 
+            }
+            .item-panel { 
+                height: 55vh; 
+                padding: 0 20px; 
+                border-bottom: 1px solid #eee; 
+            }
+            .item-title { font-size: 2.2rem; }
+            .item-panel-logo { height: 1.8em; }
+        }
     </style>
 </head>
 <body>
 
-    <audio id="bgMusic" loop>
-        <source src="stilts.mp3" type="audio/mpeg">
-    </audio>
+    <audio id="bgMusic" loop><source src="stilts.mp3" type="audio/mpeg"></audio>
 
     <header>
         <a href="index.html" class="nav-link">← Back</a>
-
         <div class="header-scroll-window">
             <div class="header-scroll-content">
-                <h2>NYLOW NYLOW NYLOW</h2>
-                <h2>NYLOW NYLOW NYLOW</h2>
+                <h2>NYLOW NYLOW NYLOW NYLOW NYLOW</h2>
+                <h2>NYLOW NYLOW NYLOW NYLOW NYLOW</h2>
             </div>
         </div>
-
         <div id="music-status">♫ OFF</div>
     </header>
 
     <div class="catalog-container">
-        <div class="image-display">
-            <img id="activeImage" src="Slo tee.jpg" alt="Product Display">
+        <div class="graphic-display-container" id="graphicArea">
+            <div class="image-display">
+                <img id="activeImage" src="SLOTEE.png" alt="Product Display">
+            </div>
         </div>
 
         <div class="text-display">
-            <div class="item-panel panel1" id="trigger1">
-                <h1 class="item-title">SLO TEE</h1>
+            <div class="item-panel" id="trigger1">
+                <div class="title-group">
+                    <h1 class="item-title" style="color: #3498db;">SLO TEE</h1>
+                    <img src="SLOauto.png" class="item-panel-logo" alt="Slo Logo">
+                </div>
                 <p class="item-desc">Heavyweight cotton. Blue halftone grunge character graphic.</p>
                 <p class="item-price">$45.00</p>
             </div>
 
-            <div class="item-panel panel2" id="trigger2">
-                <h1 class="item-title">NYROW TEE</h1>
+            <div class="item-panel" id="trigger2">
+                <div class="title-group">
+                    <h1 class="item-title" style="color: #e74c3c;">NYROW TEE</h1>
+                    <img src="NYROWAUTO.png" class="item-panel-logo" alt="Nyrow Logo">
+                </div>
                 <p class="item-desc">Heavyweight cotton. Red halftone spray-paint character graphic.</p>
                 <p class="item-price">$45.00</p>
             </div>
@@ -171,49 +174,48 @@
     </div>
 
     <script>
-    // Music Logic (Toggle On/Off)
     const audio = document.getElementById('bgMusic');
     const mStatus = document.getElementById('music-status');
 
-    // We attach the listener to mStatus specifically so clicking 'Back' doesn't trigger music
     mStatus.addEventListener('click', function() {
         if (audio.paused) {
             audio.play().then(() => {
-                mStatus.innerText = "♫ ON";
-                mStatus.style.color = "#3498db"; // Blue when playing
+                mStatus.innerText = "♫ ON"; mStatus.style.color = "#3498db";
             }).catch(e => console.log("Music blocked"));
         } else {
-            audio.pause();
-            mStatus.innerText = "♫ OFF";
+            audio.pause(); mStatus.innerText = "♫ OFF"; mStatus.style.color = "#666";
         }
     });
 
-    // Image Swap Logic (Keep this as is)
     const activeImage = document.getElementById('activeImage');
+    const graphicArea = document.getElementById('graphicArea');
     const trigger1 = document.getElementById('trigger1');
     const trigger2 = document.getElementById('trigger2');
 
-    const swapImage = (entries) => {
+    const swapGraphic = (entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 activeImage.style.opacity = '0';
+                activeImage.style.transform = 'scale(0.9)';
                 
                 setTimeout(() => {
                     if (entry.target.id === 'trigger1') {
-                        activeImage.src = 'SLO TEE.png'; 
+                        activeImage.src = 'SLOTEE.png'; 
+                        // Slightly deeper "light" blue for visibility
+                        graphicArea.style.background = 'radial-gradient(circle at center, #c2e5f9 0%, #ffffff 50%)';
                     } else if (entry.target.id === 'trigger2') {
-                        activeImage.src = 'NYROW TEE.png'; 
+                        activeImage.src = 'NYROWTEE.png'; 
+                        // Slightly deeper "light" red
+                        graphicArea.style.background = 'radial-gradient(circle at center, #f9dcdc 0%, #ffffff 50%)';
                     }
                     activeImage.style.opacity = '1';
-                }, 400);
+                    activeImage.style.transform = 'scale(1)';
+                }, 300);
             }
         });
     };
 
-    const observer = new IntersectionObserver(swapImage, {
-        threshold: 0.6 
-    });
-
+    const observer = new IntersectionObserver(swapGraphic, { threshold: 0.5 });
     observer.observe(trigger1);
     observer.observe(trigger2);
     </script>
