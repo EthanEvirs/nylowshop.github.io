@@ -72,7 +72,7 @@
 
         .image-display img {
             max-width: 80%;
-            max-height: 75vh; /* Slightly taller for desktop visibility */
+            max-height: 70vh;
             opacity: 1;
             transition: opacity 0.4s ease-in-out;
         }
@@ -84,37 +84,44 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Aligns text higher up on desktop */
+            justify-content: center; /* Centered for desktop */
             align-items: center;
             text-align: center;
-            padding: 15vh 40px 0 40px; /* Pushes content down slightly from the header */
+            padding: 0 40px;
             box-sizing: border-box;
             background: #ffffff;
             scroll-snap-align: start;
             scroll-snap-stop: always;
         }
 
-        .title-group { display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+        .title-group { display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
         .item-title { font-family: 'YukariFont'; font-size: 3.5rem; margin: 0; }
-        .item-panel-logo { height: 4.5em; width: auto; margin-left: 15px; } /* Slightly smaller for better fit */
+        .item-panel-logo { height: 5.5em; width: auto; margin-left: 15px; }
         
         .item-desc { 
             font-family: 'Coolvetica', sans-serif;
             font-size: 1.1rem;
             color: #c9c7c7; 
             max-width: 85%;
-            line-height: 1.4;
-            margin-top: 15px;
-            padding: 20px;
+            line-height: 1.6;
+            margin-top: 20px;
+            padding: 25px;
             border-radius: 12px;
             background: rgba(0, 0, 0, 0.85); 
             backdrop-filter: blur(8px);
             border: 1px solid #333;
         }
 
-        .item-price { font-family: 'YukariFont'; font-size: 2.2rem; margin-top: 15px; }
+        .item-price { font-family: 'YukariFont'; font-size: 2.2rem; margin-top: 25px; }
 
-        /* MOBILE OVERRIDE */
+        /* --- DESKTOP SPACING FIX --- */
+        @media (min-width: 601px) {
+            .item-panel {
+                padding-top: 10vh; /* Pushes content down to avoid overlapping the character */
+            }
+        }
+
+        /* --- MOBILE REFRESH --- */
         @media (max-width: 600px) {
             .catalog-container { display: block; }
 
@@ -138,15 +145,16 @@
             .item-panel { 
                 height: 100vh; 
                 display: flex;
-                justify-content: flex-end; /* Mobile needs it at bottom because image is top */
-                padding: 0 20px 8vh 20px;
+                flex-direction: column;
+                justify-content: flex-end; /* Text at bottom on mobile */
+                padding: 0 20px 10vh 20px;
                 align-items: center;
             }
 
             .item-title { font-size: 2.5rem; }
-            .item-panel-logo { height: 2.2em; }
-            .item-desc { font-size: 0.95rem; padding: 12px; width: 90%; }
-            .item-price { font-size: 2rem; margin-top: 10px; }
+            .item-panel-logo { height: 2.5em; }
+            .item-desc { font-size: 0.95rem; padding: 15px; width: 90%; }
+            .item-price { font-size: 2rem; margin-top: 15px; }
         }
     </style>
 </head>
@@ -237,7 +245,7 @@
                 if (entry.target.id === 'trigger2') updateDisplay('nyrow');
             }
         });
-    }, { threshold: 0.3 }); // Lowered threshold for better triggers on small screens
+    }, { threshold: 0.5 });
     
     observer.observe(document.getElementById('trigger1'));
     observer.observe(document.getElementById('trigger2'));
